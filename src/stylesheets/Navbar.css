@@ -1,0 +1,193 @@
+nav {
+  position: relative;
+}
+
+.navbar-row {
+  padding: 10px;
+  background-color: aqua;
+  display: flex;
+  border-bottom: 2px solid #45827f;
+
+}
+
+/* Div dans laquelle se place le brand */
+.brand-image {
+  width: 150px;
+  height: 150px;
+}
+
+
+/* Div dans laquelle se place tous les liens excluant /my-account */
+.row-links {
+  background-color: white;
+  align-items: center;
+  width: 80%;
+  justify-content: space-evenly;
+}
+
+.row-links.active {
+  display: grid;
+  margin-top: 50px;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(120px, auto);
+}
+
+.row-links-out {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/*=========================================== HAMBURGER MENU ============================================== */
+/*=========================================== HAMBURGER MENU ============================================== */
+/*=========================================== HAMBURGER MENU ============================================== */
+
+/* Affichage de l'hamburger menu  */
+.row-hamburger {
+  display: flex;
+}
+
+div.burger.burger-slip {
+  font-size: 24px;
+}
+
+/* Change la couleur du menu haburger */
+div .burger .burger-lines,
+div .burger .burger-lines:after,
+div .burger .burger-lines:before {
+  background-color: #F9B34C;
+}
+
+/*=========================================== HAMBURGER MENU ============================================== */
+/*=========================================== HAMBURGER MENU ============================================== */
+/*=========================================== HAMBURGER MENU ============================================== */
+
+
+
+/* Div qui encapsule le lien vers /my-account  */
+.row-house {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.link-container {
+  display: block;
+}
+
+.link-container :hover {
+  transition: width 0.5s;
+  border-bottom: 2px solid #45827f bottom;
+}
+/* Groupe de chaque item de la navbar intégrant l'icône et le lien */
+.link-inner {
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  color: #45827f;
+}
+
+
+/* Texte du lien dans les items de la navbar */
+.nav-text-link {
+  text-align: center;
+  white-space: nowrap;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+  .navbar-row {
+    background: white;
+  }
+
+  .row-house {
+    width: 80px;
+
+  }
+
+  .row-hamburger {
+    display: flex;
+  }
+  .brand-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  div.burger.burger-slip {
+    font-size: 16px;
+  }
+  
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .navbar-row {
+    background: white;
+  }
+
+  .row-hamburger {
+    display: flex;
+  }
+}
+
+
+@media only screen and (max-width: 768px) {
+  .navbar-row {
+    background: white;
+  }
+
+  .row-links {
+    display: none;
+  }
+
+  .row-hamburger {
+    width: 80%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .row-links.active {
+    display: grid;
+    margin-top: 50px;
+    grid-template-columns: repeat(1, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(120px, auto);
+  }
+  
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .navbar-row {
+    background: white;
+  }
+
+  .row-hamburger {
+    display: none;
+  }
+
+  .row-links {
+    display: flex;
+  }
+
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .navbar-row {
+    background: white;
+    display: flex;
+  }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .navbar-row {
+    background: white;
+  }
+
+}
