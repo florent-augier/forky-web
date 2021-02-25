@@ -1,7 +1,8 @@
 import "./App.css";
-import Navbar from "./components/header/Navbar";
 
+import Navbar from "./components/header/Navbar";
 import useWindowSize from "./helpers/WindowSize";
+import ListUsers from "./components/list-users/ListUsers";
 
 function App() {
   const [width, height] = useWindowSize();
@@ -12,6 +13,7 @@ function App() {
       <span>
         Window size: {width} x {height}
       </span>
+      <ListUsers />
     </div>
   );
 }
