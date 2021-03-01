@@ -1,16 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import useWindowSize from "./../../helpers/WindowSize";
 
 import CardUser from "./CardUser";
 
+// import { PRIVATE_URL } from "./../../config";
+
 export default function ListUsers() {
+  const [listUser, setListUser] = useState([]);
+
+  const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
+
   useEffect(() => {
     const getUsers = async () => {
-      console.log("hello");
+      let rawResponse = await fetch(`/alluser?id=${userState.id}`);
+      let response = await rawResponse.json();
+
+      console.log(response);
+      setListUser(response.userExcl);
     };
     getUsers();
-  }, []);
+  }, [userState.id]);
 
   const [width] = useWindowSize();
 
@@ -21,22 +31,17 @@ export default function ListUsers() {
   const style = {
     display: "grid",
     gridTemplateColumns:
-      width >= 1200 ? widest : width >= 900 ? medium : narrowest,
-    gridGap: "10px",
-    backgroundColor: "#2196F3",
+      width >= 1400 ? widest : width >= 900 ? medium : narrowest,
+    gridGap: "40px",
     padding: "20px",
-    justifyContent: "space-around",
+    justifyContent: "center",
   };
 
   return (
     <div style={style}>
-      <CardUser />
-      <CardUser />
-      <CardUser />
-      <CardUser />
-      <CardUser />
-      <CardUser />
-      <CardUser />
+      {listUser.map((user, i) => (
+        <CardUser key={i} user={user} useWindowSize={useWindowSize} />
+      ))}
     </div>
   );
 }

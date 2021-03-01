@@ -10,9 +10,9 @@ function App() {
   return (
     <div>
       <Navbar />
-      <span>
+      <p>
         Window size: {width} x {height}
-      </span>
+      </p>
       <ListUsers />
     </div>
   );
