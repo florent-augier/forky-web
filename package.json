@@ -16,8 +16,11 @@
     "google-font-installer": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-ionicons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "styled-components": "^5.2.1",
+    "three": "^0.126.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

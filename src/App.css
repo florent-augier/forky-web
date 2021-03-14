@@ -1,50 +1,127 @@
+/*import roboto font */
 @font-face {
   font-family: 'Roboto-100';
-  src:url('./fonts/Roboto-100.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-100.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-100italic';
-  src:url('./fonts/Roboto-100italic.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-100italic.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-300';
-  src:url('./fonts/Roboto-300.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-300.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-300italic';
-  src:url('./fonts/Roboto-300italic.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-300italic.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-500';
-  src:url('./fonts/Roboto-500.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-500.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-500italic';
-  src:url('./fonts/Roboto-500italic.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-500italic.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-700';
-  src:url('./fonts/Roboto-700.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-700.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-700italic';
-  src:url('./fonts/Roboto-700italic.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-700italic.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-900';
-  src:url('./fonts/Roboto-900.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-900.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-900italic';
-  src:url('./fonts/Roboto-900italic.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-900italic.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-italic';
-  src:url('./fonts/Roboto-italic.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-italic.ttf') format('truetype');
 }
 @font-face {
   font-family: 'Roboto-regular';
-  src:url('./fonts/Roboto-regular.ttf') format('truetype');
+  src:url('./fonts/roboto/Roboto-regular.ttf') format('truetype');
+}
+
+
+/*import poppins font */
+@font-face {
+  font-family: 'Poppins-100';
+  src:url('./fonts/poppins/Poppins-100.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-100italic';
+  src:url('./fonts/poppins/Poppins-100italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-200';
+  src:url('./fonts/poppins/Poppins-200.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-200italic';
+  src:url('./fonts/poppins/Poppins-200italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-300';
+  src:url('./fonts/poppins/Poppins-300.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-300italic';
+  src:url('./fonts/poppins/Poppins-300italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-500';
+  src:url('./fonts/poppins/Poppins-500.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-500italic';
+  src:url('./fonts/poppins/Poppins-500italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-600';
+  src:url('./fonts/poppins/Poppins-600.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-600italic';
+  src:url('./fonts/poppins/Poppins-600italic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins-700';
+  src:url('./fonts/poppins/Poppins-700.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-700italic';
+  src:url('./fonts/poppins/Poppins-700italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-800';
+  src:url('./fonts/poppins/Poppins-800.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-800italic';
+  src:url('./fonts/poppins/Poppins-800italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-900';
+  src:url('./fonts/poppins/Poppins-900.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-900italic';
+  src:url('./fonts/poppins/Poppins-900italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-italic';
+  src:url('./fonts/poppins/Poppins-italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Poppins-regular';
+  src:url('./fonts/poppins/Poppins-regular.ttf') format('truetype');
 }
 
 
