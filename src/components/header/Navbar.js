@@ -13,9 +13,10 @@ import Burger from "@animated-burgers/burger-slip";
 import "@animated-burgers/burger-slip/dist/styles.css";
 
 import RowLinks from "./RowLinks";
-import useWindowSize from "./../../helpers/WindowSize";
+import ListUsers from "../list-users/ListUsers";
+import ListLunches from "../my-lunches/ListLunches";
 
-export default function Navbar() {
+export default function Navbar({ useWindowSize }) {
   const [isOpen, setIsOpen] = useState(false); // Hook gérant le toggle de l'hamburger
   const [isVisible, setIsVisible] = useState(true); // Hook gérant l'affichage de RowLinks selon le breakpoint
 
@@ -98,10 +99,13 @@ export default function Navbar() {
       )}
 
       <Switch>
-        <Route path="/home"></Route>
-        <Route path="/lunch"></Route>
-        <Route path="/my-lunches"></Route>
-        <Route path="/my-account"></Route>
+        <Route exact path="/">
+          <ListUsers />
+        </Route>
+        <Route exact path="/my-lunches">
+          <ListLunches />
+        </Route>
+        <Route exact path="/my-account"></Route>
       </Switch>
     </Router>
   );

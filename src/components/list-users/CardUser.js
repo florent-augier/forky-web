@@ -80,7 +80,7 @@ export default function CardUser({ user, useWindowSize }) {
               size={1}
               horizontal
               vertical
-              color="#45827f"
+              color="#f9b34c"
               rotate={180}
             />
             <p style={{ margin: "12px", fontFamily: "Poppins-300" }}>
@@ -97,7 +97,7 @@ export default function CardUser({ user, useWindowSize }) {
               size={1}
               horizontal
               vertical
-              color="#45827f"
+              color="#f9b34c"
               rotate={180}
             />
             <Icon
@@ -105,7 +105,7 @@ export default function CardUser({ user, useWindowSize }) {
               size={1}
               horizontal
               vertical
-              color="#45827f"
+              color="#f9b34c"
               rotate={180}
             />
 
@@ -114,7 +114,7 @@ export default function CardUser({ user, useWindowSize }) {
               size={1}
               horizontal
               vertical
-              color="#45827f"
+              color="#f9b34c"
               rotate={180}
             />
 
@@ -132,10 +132,11 @@ export default function CardUser({ user, useWindowSize }) {
           backgroundColor: "#45827f",
           borderRadius: "0px 0px 12px 12px",
           alignContent: "center",
+          color: "#f9b34c",
         }}
       >
         <BriefcaseOutline
-          color={"#00000"}
+          color={"#f9b34c"}
           beat={beat}
           height="24px"
           width="24px"
