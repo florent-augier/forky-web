@@ -1,10 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  NavLink,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "../../stylesheets/Navbar.css";
 import logo from "../../images/logo-green.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,7 +9,8 @@ import "@animated-burgers/burger-slip/dist/styles.css";
 
 import RowLinks from "./RowLinks";
 import ListUsers from "../list-users/ListUsers";
-import ListLunches from "../my-lunches/ListLunches";
+import Account from "../account/Account";
+import MyLunches from "../my-lunches/MyLunches";
 
 export default function Navbar({ useWindowSize }) {
   const [isOpen, setIsOpen] = useState(false); // Hook gérant le toggle de l'hamburger
@@ -75,7 +71,7 @@ export default function Navbar({ useWindowSize }) {
             onMouseEnter={() => handleMouseEnter(myAccountLink)}
             onMouseLeave={() => handleMouseLeave(myAccountLink)}
           >
-            <NavLink to="/my-account" style={linkStyle}>
+            <Link to="/my-account" style={linkStyle}>
               <div className="link-inner">
                 <FontAwesomeIcon
                   icon={faHouseUser}
@@ -83,7 +79,7 @@ export default function Navbar({ useWindowSize }) {
                 />
                 {width >= 600 && <h1 className="nav-text-link">Mon compte</h1>}
               </div>
-            </NavLink>
+            </Link>
           </div>
         </div>
       </nav>
@@ -103,9 +99,11 @@ export default function Navbar({ useWindowSize }) {
           <ListUsers />
         </Route>
         <Route exact path="/my-lunches">
-          <ListLunches />
+          <MyLunches />
         </Route>
-        <Route exact path="/my-account"></Route>
+        <Route exact path="/my-account">
+          <Account />
+        </Route>
       </Switch>
     </Router>
   );
