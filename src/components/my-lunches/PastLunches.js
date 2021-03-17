@@ -1,31 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CardLunch from "./CardLunch";
 
-const myPastLunches = [
-  {
-    day: Date.now(),
-    favorite: "Pizza",
-    restaurant: "l'italien",
-    status: "accepté",
-  },
-  {
-    day: Date.now(),
-    favorite: "Chinois",
-    restaurant: "Le Nem",
-    status: "en attente",
-  },
-  {
-    day: Date.now(),
-    favorite: "Pakistanais",
-    restaurant: "Le Pak",
-    status: "refusé",
-  },
-];
-
 export default function PastLunches() {
-  return (
+  const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
+
+  const [pastInvits, setPastInvits] = useState([]);
+  useEffect(() => {
+    const getPastInvits = async () => {
+      let rawResponse = await fetch(`/passed-invit?id=${userState.id}`);
+      let response = await rawResponse.json();
+
+      console.log(response);
+      setPastInvits(response.invitations);
+    };
+    getPastInvits();
+  }, [userState.id]);
+
+  return !pastInvits ? (
+    <p
+      style={{
+        fontFamily: "Poppins-900",
+        fontSize: "34px",
+        textAlign: "center",
+      }}
+    >
+      Aucunes invitations passées,
+      <br /> commencez l'aventure maintenant !
+    </p>
+  ) : (
     <div>
-      {myPastLunches.map((lunch, i) => (
+      {pastInvits.map((lunch, i) => (
         <CardLunch lunch={lunch} key={i} />
       ))}
     </div>

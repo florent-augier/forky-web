@@ -8,11 +8,7 @@ import {
 } from "@mdi/js";
 import moment from "moment";
 
-import useWindowSize from "../../helpers/WindowSize";
-
 export default function CardLunch({ lunch }) {
-  const [width] = useWindowSize();
-
   const [color, setColor] = useState(null);
 
   useEffect(() => {
@@ -23,26 +19,38 @@ export default function CardLunch({ lunch }) {
     } else {
       setColor("#f9b34c");
     }
+
+    const getUserInfo = async () => {
+      console.log("hello from card");
+    };
+    getUserInfo();
   }, [lunch]);
+
+  const containerCardStyle = {
+    display: "flex",
+    justifyContent: "center",
+  };
+
   const cardStyle = {
     display: "flex",
     flexDirection: "row",
-    width: `${width >= 600 ? "400px" : "300px"}`,
-    height: `${width >= 600 ? "300px" : "200px"}`,
+    width: "80%",
+    height: "300px",
     backgroundColor: "white",
     borderRadius: "12px",
     boxShadow: "0 2px 4px 0 grey, 0 3px 20px 0 grey",
-    border: "1px solid #45827f",
+    border: `2px solid ${color}`,
+    overflowAnchor: "auto",
   };
   const dateStyle = {
     display: "flex",
-    justifyContent: "start",
+    justifyContent: "center",
     alignItems: "center",
-    marginBottom: "5px",
+    margin: "50px",
   };
 
   return (
-    <div>
+    <div style={{ width: "100%", margin: "auto" }}>
       <div style={dateStyle}>
         <Icon
           path={
@@ -52,7 +60,7 @@ export default function CardLunch({ lunch }) {
               ? mdiCalendarRemoveOutline
               : mdiCalendarOutline
           }
-          size={1.5}
+          size={2}
           horizontal
           vertical
           color={color}
@@ -63,13 +71,17 @@ export default function CardLunch({ lunch }) {
             color: color,
             marginLeft: "12px",
             fontFamily: "Poppins-500italic",
+            fontSize: "32px",
+            fontWeight: "bolder",
           }}
         >
-          {moment(lunch.day).format("DD/MM/YYYY")}
+          {moment(lunch.date).format("DD/MM/YYYY")}
         </span>
       </div>
-      <div style={cardStyle}>
-        <p>{lunch.restaurant}</p>
+      <div style={containerCardStyle}>
+        <div style={cardStyle}>
+          <p>{lunch.restaurant}</p>
+        </div>
       </div>
     </div>
   );

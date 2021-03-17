@@ -7,7 +7,7 @@ import pattern from "./images/pattern3.png";
 
 function App() {
   return (
-    <div style={{ backgroundImage: `url(${pattern})` }}>
+    <div style={{ backgroundImage: `url(${pattern})`, minHeight: "100vw" }}>
       <Navbar useWindowSize={useWindowSize} />
     </div>
   );

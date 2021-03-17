@@ -3,5 +3,9 @@ import React from "react";
 import BreadCrumb from "./BreadCrumb";
 
 export default function MyLunches() {
-  return <BreadCrumb />;
+  return (
+    <div style={{ margin: "20px" }}>
+      <BreadCrumb />
+    </div>
+  );
 }
