@@ -10,6 +10,9 @@ import moment from "moment";
 
 export default function CardLunch({ lunch }) {
   const [color, setColor] = useState(null);
+  const [user, setUser] = useState({});
+
+  const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
 
   useEffect(() => {
     if (lunch.status === "accepté") {
@@ -21,10 +24,23 @@ export default function CardLunch({ lunch }) {
     }
 
     const getUserInfo = async () => {
-      console.log("hello from card");
+      if (userState.id !== lunch.id_sender) {
+        let rawResponse = await fetch(`/getmydata?id=${lunch.id_sender}`);
+        const response = await rawResponse.json();
+        if (response.result) {
+          setUser(response.myUser);
+        }
+      } else {
+        let rawResponse = await fetch(`/getmydata?id=${lunch.id_receiver}`);
+        const response = await rawResponse.json();
+        if (response.result) {
+          setUser(response.myUser);
+        }
+      }
     };
+
     getUserInfo();
-  }, [lunch]);
+  }, [lunch, userState.id]);
 
   const containerCardStyle = {
     display: "flex",
@@ -49,7 +65,7 @@ export default function CardLunch({ lunch }) {
     margin: "50px",
   };
 
-  return (
+  return user.name ? (
     <div style={{ width: "100%", margin: "auto" }}>
       <div style={dateStyle}>
         <Icon
@@ -80,9 +96,20 @@ export default function CardLunch({ lunch }) {
       </div>
       <div style={containerCardStyle}>
         <div style={cardStyle}>
-          <p>{lunch.restaurant}</p>
+          <img
+            src={user.photo}
+            alt={user.name}
+            style={{
+              width: "200px",
+              borderRadius: "12px 0 0 12px",
+              borderRight: `1px solid ${color}`,
+            }}
+          ></img>
+          <p>Votre déjeunez avec {user.name ? user.name : ""}</p>
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   );
 }
