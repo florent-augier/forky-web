@@ -63,6 +63,11 @@ export default function BreadCrumb() {
     }
   };
 
+  // const udpateHistory = (ref) => {
+  //   console.log(ref.current.href);
+  //   history.push(ref.current.href);
+  // };
+
   return (
     <Router>
       <div

@@ -98,10 +98,10 @@ export default function Navbar({ useWindowSize }) {
         <Route exact path="/">
           <ListUsers />
         </Route>
-        <Route exact path="/my-lunches">
+        <Route path="/my-lunches">
           <MyLunches />
         </Route>
-        <Route exact path="/my-account">
+        <Route path="/my-account">
           <Account />
         </Route>
       </Switch>
