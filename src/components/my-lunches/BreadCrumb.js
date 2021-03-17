@@ -15,7 +15,7 @@ export default function BreadCrumb() {
   const upcomingLinkRef = useRef(null);
   const pastLinkRef = useRef(null);
 
-  const style = {
+  const headerStyle = {
     display: "flex",
     justifyContent: "center",
     flexDirection: "row",
@@ -26,12 +26,6 @@ export default function BreadCrumb() {
     color: "#f9b34c",
   };
 
-  const breadcrumbStyle = {
-    display: "flex",
-    justifyContent: "space-evenly",
-    width: "100%",
-    marginTop: "50px",
-  };
   const underlineStyle = {
     display: "flex",
     margin: "auto",
@@ -39,6 +33,12 @@ export default function BreadCrumb() {
     height: "10px",
     borderRadius: "50%",
     backgroundColor: "#f9b34c",
+  };
+  const breadcrumbStyle = {
+    display: "flex",
+    justifyContent: "space-evenly",
+    width: "100%",
+    marginTop: "50px",
   };
 
   const handleMouseEnter = () => {
@@ -66,7 +66,7 @@ export default function BreadCrumb() {
   return (
     <Router>
       <div
-        style={style}
+        style={headerStyle}
         ref={divRef}
         onMouseEnter={() => handleMouseEnter()}
         onMouseLeave={handleMouseLeave}
@@ -120,7 +120,7 @@ export default function BreadCrumb() {
         <Route exact path="/my-lunches/upcoming-lunches">
           <UpcomingLunches />
         </Route>
-        <Route exact path="/my-lunches/past-lunches">
+        <Route path="/my-lunches/past-lunches">
           <PastLunches />
         </Route>
       </Switch>
