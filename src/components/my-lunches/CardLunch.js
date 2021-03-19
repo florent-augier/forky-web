@@ -7,6 +7,12 @@ import {
   mdiCalendarOutline,
   mdiClockTimeNine,
   mdiMapMarker,
+  mdiCloseOctagonOutline,
+  mdiTimer,
+  mdiCheckOutline,
+  mdiMessage,
+  mdiCalendarQuestion,
+  mdiCalendarClock,
 } from "@mdi/js";
 import moment from "moment";
 import useWindowSize from "../../helpers/WindowSize";
@@ -20,9 +26,9 @@ export default function CardLunch({ lunch }) {
   const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
 
   useEffect(() => {
-    if (lunch.status === "accepté") {
+    if (lunch.statut_invit === "Accepté") {
       setColor("#45827f");
-    } else if (lunch.status === "refusé") {
+    } else if (lunch.statut_invit === "Refusé") {
       setColor("#C73718");
     } else {
       setColor("#f9b34c");
@@ -71,22 +77,29 @@ export default function CardLunch({ lunch }) {
     marginTop: "20px",
   };
 
-  // const cardStyle = {
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   width: "80%",
-  //   height: "300px",
-  //   backgroundColor: "white",
-  //   borderRadius: "12px",
-  //   boxShadow: "0 2px 4px 0 grey, 0 3px 20px 0 grey",
-  //   border: `2px solid ${color}`,
-  //   overflowAnchor: "auto",
-  // };
   const dateStyle = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     margin: "50px",
+  };
+
+  const onButtonEnter = (e) => {
+    console.log(e.target.localName);
+    e.target.style.transition = "all 1s";
+    if (e.target.localName === "button") {
+      e.target.style.borderRadius = "0";
+      e.target.style.border = `2px solid ${
+        color === "#f9b34c" ? "#45827f" : color
+      } `;
+    }
+    // e.target.style.border = "2px solid #f9b34c ";
+  };
+  const onButtonLeave = (e) => {
+    if (e.target.localName === "button") {
+      e.target.style.borderRadius = "12px";
+      e.target.style.border = `2px solid ${color}`;
+    }
   };
 
   return user.name ? (
@@ -164,7 +177,7 @@ export default function CardLunch({ lunch }) {
                 style={{ display: "grid", gridTemplateColumns: "auto auto" }}
               >
                 <div style={gridItemStyle}>
-                  <Icon path={mdiClockTimeNine} size={1} />
+                  <Icon path={mdiClockTimeNine} size={1} color="grey" />
                   <p style={{ marginLeft: "12px" }}>
                     Rendez-vous:{" "}
                     <em style={{ color: color }}>
@@ -181,27 +194,36 @@ export default function CardLunch({ lunch }) {
                   </p>
                 </div>
                 <div style={gridItemStyle}>
-                  <Icon path={mdiMapMarker} size={1} />
+                  <Icon path={mdiMapMarker} size={1} color="grey" />
 
                   <p style={{ marginLeft: "12px" }}>
                     Restaurant:{" "}
-                    <em>
+                    <em style={{ color: color }}>
                       <b>{lunch.lieu_propose}</b>
                     </em>
                   </p>
                 </div>
                 <div style={gridItemStyle}>
+                  {lunch.statut_invit === "Accepté" ? (
+                    <Icon path={mdiCheckOutline} size={1} color="grey" />
+                  ) : lunch.statut_invit === "Refusé" ? (
+                    <Icon path={mdiCloseOctagonOutline} size={1} color="grey" />
+                  ) : (
+                    <Icon path={mdiCalendarClock} size={1} color="grey" />
+                  )}
                   <p style={{ marginLeft: "12px" }}>
                     Statut de l'invitation:{" "}
-                    <em>
+                    <em style={{ color: color }}>
                       <b>{lunch.statut_invit}</b>
                     </em>
                   </p>
                 </div>
                 <div style={gridItemStyle}>
+                  <Icon path={mdiTimer} size={1} color="grey" />
+
                   <p style={{ marginLeft: "12px" }}>
                     Durée:{" "}
-                    <em>
+                    <em style={{ color: color }}>
                       <b>
                         {lunch.temps_propose === 0.5
                           ? "30 minutes"
@@ -224,8 +246,85 @@ export default function CardLunch({ lunch }) {
               display: "flex",
             }}
           >
-            <div style={{ width: "100%" }}>One</div>
-            <div style={{ width: "100%" }}>Two</div>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <button
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  border: `2px solid ${color}`,
+                  borderRadius: "12px",
+                  backgroundColor: "white",
+                }}
+                onMouseEnter={(e) => onButtonEnter(e)}
+                onMouseLeave={(e) => onButtonLeave(e)}
+              >
+                <span
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "10px",
+                  }}
+                >
+                  <Icon path={mdiMessage} size={1} />
+                  <b
+                    style={{
+                      padding: "0",
+                      fontFamily: "Poppins-500",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    Voir le message
+                  </b>
+                </span>
+              </button>
+            </div>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-around",
+                alignItems: "center",
+              }}
+            >
+              <button
+                style={{
+                  border: `2px solid ${color}`,
+                  borderRadius: "12px",
+                  backgroundColor: "white",
+                }}
+                onMouseEnter={(e) => onButtonEnter(e)}
+                onMouseLeave={(e) => onButtonLeave(e)}
+              >
+                <span
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    margin: "10px",
+                  }}
+                >
+                  <Icon path={mdiCalendarQuestion} size={1} />
+                  <b
+                    style={{
+                      padding: "0",
+                      fontFamily: "Poppins-500",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    Proposé un déjeuner à {user.name}
+                  </b>
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
