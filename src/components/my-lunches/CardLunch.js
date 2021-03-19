@@ -85,15 +85,15 @@ export default function CardLunch({ lunch }) {
   };
 
   const onButtonEnter = (e) => {
-    console.log(e.target.localName);
-    e.target.style.transition = "all 1s";
     if (e.target.localName === "button") {
+      e.target.style.transition = "all 1s";
       e.target.style.borderRadius = "0";
-      e.target.style.border = `2px solid ${
-        color === "#f9b34c" ? "#45827f" : color
-      } `;
+      if (color === "#f9b34c") {
+        e.target.style.border = `2px solid #e09891`;
+      } else {
+        e.target.style.border = `2px solid #f9b34c`;
+      }
     }
-    // e.target.style.border = "2px solid #f9b34c ";
   };
   const onButtonLeave = (e) => {
     if (e.target.localName === "button") {
