@@ -88,17 +88,15 @@ export default function CardLunch({ lunch }) {
     if (e.target.localName === "button") {
       e.target.style.transition = "all 1s";
       e.target.style.borderRadius = "0";
-      if (color === "#f9b34c") {
-        e.target.style.border = `2px solid #e09891`;
-      } else {
-        e.target.style.border = `2px solid #f9b34c`;
-      }
+      e.target.style.border = "2px solid #e09891";
+      e.target.style.boxShadow = "0 2px 4px 0 grey, 0 3px 20px 0 grey";
     }
   };
   const onButtonLeave = (e) => {
     if (e.target.localName === "button") {
       e.target.style.borderRadius = "12px";
       e.target.style.border = `2px solid ${color}`;
+      e.target.style.boxShadow = "none";
     }
   };
 
@@ -171,7 +169,7 @@ export default function CardLunch({ lunch }) {
                   fontSize: "24px",
                 }}
               >
-                Votre déjeuner avec {user.name}
+                Votre déjeuner avec <b style={{ color: color }}>{user.name}</b>
               </p>
               <div
                 style={{ display: "grid", gridTemplateColumns: "auto auto" }}
@@ -256,9 +254,6 @@ export default function CardLunch({ lunch }) {
             >
               <button
                 style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
                   border: `2px solid ${color}`,
                   borderRadius: "12px",
                   backgroundColor: "white",
