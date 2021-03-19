@@ -22,6 +22,7 @@ export default function CardLunch({ lunch }) {
 
   const [color, setColor] = useState(null);
   const [user, setUser] = useState({});
+  const [day, setDay] = useState(null);
 
   const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
 
@@ -33,6 +34,9 @@ export default function CardLunch({ lunch }) {
     } else {
       setColor("#f9b34c");
     }
+
+    setDay(moment(lunch.date).subtract(1, "days").calendar());
+    // console.log(moment(lunch.date).substract(1, "days"));
 
     const getUserInfo = async () => {
       if (userState.id !== lunch.id_sender) {
@@ -126,7 +130,7 @@ export default function CardLunch({ lunch }) {
             fontWeight: "bolder",
           }}
         >
-          {moment(lunch.date).format("DD/MM/YYYY")}
+          {moment(day).format("DD/MM/YYYY")}
         </span>
       </div>
       <div style={containerCardStyle}>
