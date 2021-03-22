@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 
+import Overlay from "../../helpers/Overlay";
+
 import Icon from "@mdi/react";
 import {
   mdiCalendarCheckOutline,
@@ -23,6 +25,7 @@ export default function CardLunch({ lunch }) {
   const [color, setColor] = useState(null);
   const [user, setUser] = useState({});
   const [day, setDay] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
 
@@ -35,8 +38,7 @@ export default function CardLunch({ lunch }) {
       setColor("#f9b34c");
     }
 
-    setDay(moment(lunch.date).subtract(1, "days").calendar());
-    // console.log(moment(lunch.date).substract(1, "days"));
+    setDay(moment(lunch.date));
 
     const getUserInfo = async () => {
       if (userState.id !== lunch.id_sender) {
@@ -104,6 +106,10 @@ export default function CardLunch({ lunch }) {
     }
   };
 
+  const toggleModal = (e) => {
+    setIsOpen(!isOpen);
+  };
+
   return user.name ? (
     <div style={{ width: "100%", margin: "auto" }}>
       <div style={dateStyle}>
@@ -130,7 +136,7 @@ export default function CardLunch({ lunch }) {
             fontWeight: "bolder",
           }}
         >
-          {moment(day).format("DD/MM/YYYY")}
+          {moment(day).subtract(1, "days").format("DD/MM/YYYY")}
         </span>
       </div>
       <div style={containerCardStyle}>
@@ -256,7 +262,17 @@ export default function CardLunch({ lunch }) {
                 alignItems: "center",
               }}
             >
+              {isOpen && (
+                <Overlay
+                  toggleModal={toggleModal}
+                  isOpen={isOpen}
+                  color={color}
+                  message={lunch.message}
+                  name={user.name}
+                />
+              )}
               <button
+                onClick={() => toggleModal()}
                 style={{
                   border: `2px solid ${color}`,
                   borderRadius: "12px",
