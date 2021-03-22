@@ -76,11 +76,13 @@ export default function CardLunch({ lunch }) {
 
   const gridItemStyle = {
     display: "flex",
-    justifyContent: "center",
+    width: "100%",
+    justifyContent: width > 400 ? "center" : "flex-start",
     alignItems: "center",
     fontFamily: "Poppins-300",
     margin: "auto",
     marginTop: "20px",
+    fontSize: width > 600 ? "24px" : "12px",
   };
 
   const dateStyle = {
@@ -159,8 +161,12 @@ export default function CardLunch({ lunch }) {
                 backgroundPositionY: "center",
                 border: `2px solid ${color}`,
 
-                width: `${width >= 600 ? "150px" : "80px"}`,
-                height: `${width >= 600 ? "150px" : "80px"}`,
+                width: `${
+                  width >= 600 ? "150px" : width >= 400 ? "80px" : "40px"
+                }`,
+                height: `${
+                  width >= 600 ? "150px" : width >= 400 ? "80px" : "40px"
+                }`,
               }}
             ></div>
           </div>
@@ -176,13 +182,16 @@ export default function CardLunch({ lunch }) {
                   fontFamily: "Poppins-500",
                   margin: "auto",
                   marginTop: "20px",
-                  fontSize: "24px",
+                  fontSize: width > 600 ? "24px" : "12px",
                 }}
               >
                 Votre déjeuner avec <b style={{ color: color }}>{user.name}</b>
               </p>
               <div
-                style={{ display: "grid", gridTemplateColumns: "auto auto" }}
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: width > 800 ? "auto auto" : "auto",
+                }}
               >
                 <div style={gridItemStyle}>
                   <Icon path={mdiClockTimeNine} size={1} color="grey" />
@@ -277,6 +286,8 @@ export default function CardLunch({ lunch }) {
                   border: `2px solid ${color}`,
                   borderRadius: "12px",
                   backgroundColor: "white",
+                  fontSize: width > 600 ? "24px" : "12px",
+                  margin: "2px",
                 }}
                 onMouseEnter={(e) => onButtonEnter(e)}
                 onMouseLeave={(e) => onButtonLeave(e)}
@@ -295,6 +306,8 @@ export default function CardLunch({ lunch }) {
                       padding: "0",
                       fontFamily: "Poppins-500",
                       marginLeft: "10px",
+                      fontSize:
+                        width > 600 ? "16px" : width > 400 ? "12px" : "8px",
                     }}
                   >
                     Voir le message
@@ -315,6 +328,8 @@ export default function CardLunch({ lunch }) {
                   border: `2px solid ${color}`,
                   borderRadius: "12px",
                   backgroundColor: "white",
+                  fontSize: width > 600 ? "24px" : "12px",
+                  margin: "2px",
                 }}
                 onMouseEnter={(e) => onButtonEnter(e)}
                 onMouseLeave={(e) => onButtonLeave(e)}
@@ -333,6 +348,8 @@ export default function CardLunch({ lunch }) {
                       padding: "0",
                       fontFamily: "Poppins-500",
                       marginLeft: "10px",
+                      fontSize:
+                        width > 600 ? "16px" : width > 400 ? "12px" : "8px",
                     }}
                   >
                     Proposé un déjeuner à {user.name}
