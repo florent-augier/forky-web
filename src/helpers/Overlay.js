@@ -35,7 +35,7 @@ export default function Overlay({ toggleModal, isOpen, color, message, name }) {
     justifyContent: "center",
     marginBottom: "50px",
     color: "#45827f",
-    fontFamily: "Poppins-500italic",
+    fontFamily: "Poppins-500",
   };
 
   const buttonStyle = {
@@ -44,6 +44,7 @@ export default function Overlay({ toggleModal, isOpen, color, message, name }) {
     backgroundColor: "white",
     padding: "20px",
     margin: "20px",
+    fontFamily: "Poppins-500",
   };
 
   const divStyle = {
@@ -52,6 +53,7 @@ export default function Overlay({ toggleModal, isOpen, color, message, name }) {
     alignItems: "center",
     color: "#e09891",
     margin: "30px",
+    fontFamily: "Poppins-300italic",
   };
   return (
     <div>
