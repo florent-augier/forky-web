@@ -1,5 +1,7 @@
 import React from "react";
 import useWindowSize from "./../../helpers/WindowSize";
+// import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 export default function Account() {
   const [width, height] = useWindowSize();
@@ -7,9 +9,9 @@ export default function Account() {
   return (
     <div>
       <p>
-        Window size: {width} x {height}
+        {width} x {height}
       </p>
-      <p>Hello from account</p>
+      <SignUp />
     </div>
   );
 }
