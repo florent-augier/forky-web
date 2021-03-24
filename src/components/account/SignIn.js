@@ -1,29 +1,64 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
-export default function SignIn(params) {
-  const [emailValue, setEmailValue] = useState("");
-  const [passwordValue, setPasswordValue] = useState("");
+import useWindowSize from "../../helpers/WindowSize";
 
-  const handleSubmit = () => {
-    console.log("tu as submit");
-  };
+export default function SignIn() {
+  const [width] = useWindowSize();
+
+  const [emailValue, setEmailValue] = useState(""); // Etat qui gère l'email
+  const [passwordValue, setPasswordValue] = useState(""); // Etat qui gère le mot de passe
+  const [isError, setIsError] = useState(true); // Etat qui gère l'email
+  const [isClicked, setIsClicked] = useState(false);
+
+  const errorMessage =
+    "Vérifiez que tous les champs de saisie soient correctement remplis.";
 
   useEffect(() => {
-    console.log(emailValue);
+    if (!isError && isClicked) {
+      const signInDB = async () => {
+        let rawResponse = await fetch(`/sign-in`, {
+          method: "post",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `email=${emailValue}&password=${passwordValue}`,
+        });
+        console.log("my rawResponse", rawResponse);
+
+        let response = await rawResponse.json();
+        console.log("ma reponse", response);
+      };
+
+      signInDB();
+    }
+  }, [isError, emailValue, passwordValue, isClicked]);
+
+  const handleSubmit = async () => {
+    setIsClicked(true);
+  };
+
+  const checkValues = useCallback(() => {
+    const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+    if (emailValue.match(emailRegex)) {
+      setIsError(false);
+    } else {
+      setIsError(true);
+    }
   }, [emailValue]);
 
   useEffect(() => {
-    console.log(passwordValue);
-  }, [passwordValue]);
+    console.log(emailValue, passwordValue);
+    checkValues();
+  }, [emailValue, passwordValue, checkValues]);
 
-  const chechValues = () => {
-    if (!!emailValue && !!passwordValue) {
-      console.log("ok");
-    }
+  // All Styled objects
+  const headerStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    fontFamily: "Poppins-900",
   };
 
   const handleFocus = (e) => {
-    console.log(e.target);
     e.target.style.outline = "none";
   };
 
@@ -32,73 +67,135 @@ export default function SignIn(params) {
     justifyContent: "center",
   };
 
-  const labelAndInputStyle = {
+  const wrapperStyle = {
+    display: "grid",
+    gridTemplateColumns: "1fr 2fr",
+    height: "100px",
+    marginBottom: "20px",
+    width: "80%",
+  };
+  // Styling column of grid which content label
+  const labelColumn = {
     display: "flex",
-    justifyContent: "flex-end",
+    width: "100%",
+    justifyContent: "flex-start",
+    alignItems: "start",
   };
-  const inputStyle = {
-    margin: "12px",
-    fontFamily: "Poppins-300",
-    border: "2px solid #e09891",
-    borderRadius: "12px",
-    padding: "12px",
-  };
+  // Styling label only
   const labelStyle = {
     color: "#f9b34c",
     fontFamily: "Poppins-800",
+  };
+  // Styling Wrapper of input and tips
+  const inputAndTipsStyle = {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  };
+  // Styling Input only
+  const inputStyle = {
+    fontFamily: "Poppins-300",
+    fontWeight: "bold",
+    border: "2px solid #e09891",
+    borderRadius: "12px",
+    padding: "12px",
+    width: width > 700 ? "400px" : width > 500 ? "300px" : "150px",
+  };
+  const tipsStyle = {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: "0",
+    fontFamily: "Poppins-200italic",
+    fontSize: "16px",
   };
   const submitStyle = {
     display: "flex",
     justifyContent: "center",
     marginTop: "50px",
   };
-
   const buttonStyle = {
     border: "4px solid #f9b34c",
     borderRadius: "20px",
     padding: "10px",
+    backgroundColor: "#45827f",
+    color: "#f9b34c",
+    fontFamily: "Poppins-700",
   };
 
   return (
-    <div style={formContainer}>
-      <form onSubmit={() => handleSubmit()}>
-        <div style={labelAndInputStyle}>
-          <label style={labelStyle}>
-            Email :
-            <input
-              onFocus={(e) => handleFocus(e)}
-              type="email"
-              value={emailValue}
-              onChange={(e) => setEmailValue(e.target.value)}
-              placeholder="something@mail.com"
-              style={inputStyle}
-            />
-          </label>
-        </div>
-        <div style={labelAndInputStyle}>
-          <label style={labelStyle}>
-            Mot de passe :
-            <input
-              onFocus={(e) => handleFocus(e)}
-              type="password"
-              autoComplete="current-password"
-              value={passwordValue}
-              onChange={(e) => setPasswordValue(e.target.value)}
-              placeholder="Votre mot de passe"
-              style={inputStyle}
-            />
-          </label>
-        </div>
-        <div style={submitStyle}>
-          <button
-            style={buttonStyle}
-            type="submit"
-            onClick={() => chechValues()}
-          >
-            Envoyer
-          </button>
-        </div>
-      </form>
+    <div>
+      <div style={headerStyle}>
+        <h1>Se connecter</h1>
+      </div>
+      <div style={formContainer}>
+        <form onSubmit={() => handleSubmit()}>
+          {isError && (
+            <p
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                fontFamily: "Poppins-300italic",
+              }}
+            >
+              {errorMessage}
+            </p>
+          )}
+          <div style={wrapperStyle}>
+            <div style={labelColumn}>
+              <label style={labelStyle}>Email :</label>
+            </div>
+            <div style={inputAndTipsStyle}>
+              <input
+                defaultChecked
+                onFocus={(e) => handleFocus(e)}
+                type="email"
+                require="true"
+                aria-required="true"
+                autoComplete="off"
+                value={emailValue}
+                onChange={(e) => setEmailValue(e.target.value)}
+                placeholder="something@mail.com"
+                style={inputStyle}
+              />
+              <p style={tipsStyle}>Vérifiez le format de l'email.</p>
+            </div>
+          </div>
+          <div style={wrapperStyle}>
+            <div style={labelColumn}>
+              <label style={labelStyle}>Mot de passe :</label>
+            </div>
+            <div style={inputAndTipsStyle}>
+              <input
+                minLength={6}
+                onFocus={(e) => handleFocus(e)}
+                require="true"
+                required
+                aria-required="true"
+                type="password"
+                autoComplete="current-password"
+                value={passwordValue}
+                onChange={(e) => setPasswordValue(e.target.value)}
+                placeholder="Ex: MotDePasse123"
+                style={inputStyle}
+              />
+              <p style={tipsStyle}>Doit contenir au moins 6 caractères.</p>
+            </div>
+          </div>
+          {!isError && (
+            <div style={submitStyle}>
+              <button
+                style={buttonStyle}
+                onClick={(e) => e.preventDefault}
+                onFocus={(e) => handleFocus(e)}
+              >
+                Envoyer
+              </button>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 }
