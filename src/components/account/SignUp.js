@@ -38,7 +38,7 @@ export default function SignUp() {
 
   const checkValues = useCallback(() => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{10,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
     if (
       nameValue.length >= 2 &&
@@ -193,7 +193,7 @@ export default function SignUp() {
             </div>
             <div style={inputAndTipsStyle}>
               <input
-                minLength={10}
+                minLength={6}
                 onFocus={(e) => handleFocus(e)}
                 require="true"
                 required
@@ -215,7 +215,7 @@ export default function SignUp() {
             <div style={submitStyle}>
               <button
                 style={buttonStyle}
-                onClick={() => setIsClicked(true)}
+                onClick={(e) => e.preventDefault}
                 onFocus={(e) => handleFocus(e)}
               >
                 Envoyer
