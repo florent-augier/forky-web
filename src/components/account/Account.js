@@ -3,13 +3,15 @@ import React, { useRef } from "react";
 import {
   BrowserRouter as Router,
   NavLink,
+  Redirect,
   Route,
   Switch,
 } from "react-router-dom";
+import MyAccount from "./MyAccount";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 
-export default function Account() {
+export default function Account({ id, dispatch }) {
   const signInLinkRef = useRef(null);
   const signUpLinkRef = useRef(null);
 
@@ -28,7 +30,13 @@ export default function Account() {
     }
   };
 
-  return (
+  return id !== "" ? (
+    <Route>
+      <Redirect to="/my-account" from>
+        <MyAccount id={id} />
+      </Redirect>
+    </Route>
+  ) : (
     <Router>
       <div style={breadcrumbStyle}>
         <div>
@@ -74,10 +82,10 @@ export default function Account() {
 
       <Switch>
         <Route path="/account/sign-in">
-          <SignIn />
+          <SignIn dispatch={dispatch} />
         </Route>
         <Route path="/account/sign-up">
-          <SignUp />
+          <SignUp id={id} dispatch={dispatch} />
         </Route>
       </Switch>
     </Router>

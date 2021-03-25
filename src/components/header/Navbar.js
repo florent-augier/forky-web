@@ -1,22 +1,30 @@
-import React, { useState, useRef, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React, { useState, useRef, useEffect, useReducer } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 import "../../stylesheets/Navbar.css";
 import logo from "../../images/logo-green.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseUser } from "@fortawesome/free-solid-svg-icons";
 import Burger from "@animated-burgers/burger-slip";
 import "@animated-burgers/burger-slip/dist/styles.css";
+import idReducer from "../../reducers/id";
 
 import RowLinks from "./RowLinks";
 import ListUsers from "../list-users/ListUsers";
 import Account from "../account/Account";
 import MyLunches from "../my-lunches/MyLunches";
+import MyAccount from "../account/MyAccount";
 
 export default function Navbar({ useWindowSize }) {
+  const [id, dispatch] = useReducer(idReducer, "");
+
   const [isOpen, setIsOpen] = useState(false); // Hook gérant le toggle de l'hamburger
   const [isVisible, setIsVisible] = useState(true); // Hook gérant l'affichage de RowLinks selon le breakpoint
-
-  // const [myId, setMyId] = useState(null);
 
   const [width] = useWindowSize();
 
@@ -24,16 +32,15 @@ export default function Navbar({ useWindowSize }) {
   const hamburger = useRef(null);
 
   useEffect(() => {
+    console.log("depuis ma navbar", id);
+  });
+
+  useEffect(() => {
     if (width >= 768) {
       setIsVisible(true);
       setIsOpen(false);
     }
   }, [isOpen, width]);
-
-  // const getMyId = () => {
-  //   let id = localStorage.getItem("id");
-  //   setMyId(id);
-  // };
 
   const toggleBurger = () => {
     setIsOpen(!isOpen);
@@ -108,9 +115,15 @@ export default function Navbar({ useWindowSize }) {
         <Route path="/my-lunches">
           <MyLunches />
         </Route>
-        <Route path="/account">
-          <Account />
-        </Route>
+        {id !== "" ? (
+          <Route>
+            <MyAccount id={id} />
+          </Route>
+        ) : (
+          <Route path="/account">
+            <Account id={id} dispatch={dispatch} />
+          </Route>
+        )}
       </Switch>
     </Router>
   );

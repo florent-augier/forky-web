@@ -1,8 +1,10 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { Redirect } from "react-router";
 
 import useWindowSize from "../../helpers/WindowSize";
+import MyAccount from "./MyAccount";
 
-export default function SignUp() {
+export default function SignUp({ id, dispatch }) {
   const [width] = useWindowSize();
 
   const [pseudo, setPseudo] = useState("");
@@ -23,6 +25,7 @@ export default function SignUp() {
       let response = await rawResponse.json();
       if (response.result) {
         localStorage.setItem("userToken", response.user.token);
+        dispatch({ type: "saveId", id: response.user._id });
       }
     }
   };
@@ -123,7 +126,11 @@ export default function SignUp() {
     fontFamily: "Poppins-700",
   };
 
-  return (
+  return id !== "" ? (
+    <Redirect to="/my-account">
+      <MyAccount id={id} />
+    </Redirect>
+  ) : (
     <div>
       <div style={headerStyle}>
         <h1>S'inscrire</h1>
