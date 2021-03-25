@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-export default function SignIn(params) {
+export default function SignIn() {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
 
   const handleSubmit = () => {
     console.log("tu as submit");
   };
-
-  useEffect(() => {
-    console.log(emailValue);
-  }, [emailValue]);
-
-  useEffect(() => {
-    console.log(passwordValue);
-  }, [passwordValue]);
 
   const chechValues = () => {
     if (!!emailValue && !!passwordValue) {
@@ -25,6 +17,13 @@ export default function SignIn(params) {
   const handleFocus = (e) => {
     console.log(e.target);
     e.target.style.outline = "none";
+  };
+
+  const headerStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    fontFamily: "Poppins-900",
   };
 
   const formContainer = {
@@ -60,45 +59,51 @@ export default function SignIn(params) {
   };
 
   return (
-    <div style={formContainer}>
-      <form onSubmit={() => handleSubmit()}>
-        <div style={labelAndInputStyle}>
-          <label style={labelStyle}>
-            Email :
-            <input
-              onFocus={(e) => handleFocus(e)}
-              type="email"
-              value={emailValue}
-              onChange={(e) => setEmailValue(e.target.value)}
-              placeholder="something@mail.com"
-              style={inputStyle}
-            />
-          </label>
-        </div>
-        <div style={labelAndInputStyle}>
-          <label style={labelStyle}>
-            Mot de passe :
-            <input
-              onFocus={(e) => handleFocus(e)}
-              type="password"
-              autoComplete="current-password"
-              value={passwordValue}
-              onChange={(e) => setPasswordValue(e.target.value)}
-              placeholder="Votre mot de passe"
-              style={inputStyle}
-            />
-          </label>
-        </div>
-        <div style={submitStyle}>
-          <button
-            style={buttonStyle}
-            type="submit"
-            onClick={() => chechValues()}
-          >
-            Envoyer
-          </button>
-        </div>
-      </form>
+    <div>
+      <div style={headerStyle}>
+        <h1>Se connecter</h1>
+      </div>
+
+      <div style={formContainer}>
+        <form onSubmit={() => handleSubmit()}>
+          <div style={labelAndInputStyle}>
+            <label style={labelStyle}>
+              Email :
+              <input
+                onFocus={(e) => handleFocus(e)}
+                type="email"
+                value={emailValue}
+                onChange={(e) => setEmailValue(e.target.value)}
+                placeholder="something@mail.com"
+                style={inputStyle}
+              />
+            </label>
+          </div>
+          <div style={labelAndInputStyle}>
+            <label style={labelStyle}>
+              Mot de passe :
+              <input
+                onFocus={(e) => handleFocus(e)}
+                type="password"
+                autoComplete="current-password"
+                value={passwordValue}
+                onChange={(e) => setPasswordValue(e.target.value)}
+                placeholder="Votre mot de passe"
+                style={inputStyle}
+              />
+            </label>
+          </div>
+          <div style={submitStyle}>
+            <button
+              style={buttonStyle}
+              type="submit"
+              onClick={() => chechValues()}
+            >
+              Envoyer
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

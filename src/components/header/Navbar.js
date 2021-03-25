@@ -16,6 +16,8 @@ export default function Navbar({ useWindowSize }) {
   const [isOpen, setIsOpen] = useState(false); // Hook gérant le toggle de l'hamburger
   const [isVisible, setIsVisible] = useState(true); // Hook gérant l'affichage de RowLinks selon le breakpoint
 
+  // const [myId, setMyId] = useState(null);
+
   const [width] = useWindowSize();
 
   const myAccountLink = useRef(null);
@@ -27,6 +29,11 @@ export default function Navbar({ useWindowSize }) {
       setIsOpen(false);
     }
   }, [isOpen, width]);
+
+  // const getMyId = () => {
+  //   let id = localStorage.getItem("id");
+  //   setMyId(id);
+  // };
 
   const toggleBurger = () => {
     setIsOpen(!isOpen);
@@ -71,7 +78,7 @@ export default function Navbar({ useWindowSize }) {
             onMouseEnter={() => handleMouseEnter(myAccountLink)}
             onMouseLeave={() => handleMouseLeave(myAccountLink)}
           >
-            <Link to="/my-account" style={linkStyle}>
+            <Link to="/account" style={linkStyle}>
               <div className="link-inner">
                 <FontAwesomeIcon
                   icon={faHouseUser}
@@ -101,7 +108,7 @@ export default function Navbar({ useWindowSize }) {
         <Route path="/my-lunches">
           <MyLunches />
         </Route>
-        <Route path="/my-account">
+        <Route path="/account">
           <Account />
         </Route>
       </Switch>

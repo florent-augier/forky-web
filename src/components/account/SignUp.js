@@ -1,60 +1,53 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 
 import useWindowSize from "../../helpers/WindowSize";
 
 export default function SignUp() {
   const [width] = useWindowSize();
 
-  const [emailValue, setEmailValue] = useState(""); // Etat qui gère l'email
-  const [passwordValue, setPasswordValue] = useState(""); // Etat qui gère le mot de passe
-  const [nameValue, setNameValue] = useState(""); // Etat qui gère le nom
-  const [isError, setIsError] = useState(true); // Etat qui gère l'email
-  const [isClicked, setIsClicked] = useState(false);
+  const [pseudo, setPseudo] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isGoodForm, setIsGoodForm] = useState(false);
+  const errorMessage = `Si tous les champs sont valides, vous ne verrez plus ce message  `;
 
-  const errorMessage =
-    "Vérifiez que tous les champs de saisie soient correctement remplis.";
+  // Function that handle form on submit
+  const handleSignUp = async () => {
+    if (isGoodForm) {
+      let rawResponse = await fetch(`/sign-up`, {
+        method: "post",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `name=${pseudo}&email=${email}&password=${password}`,
+      });
 
-  useEffect(() => {
-    if (!isError && isClicked) {
-      const signUpDB = async () => {
-        let rawResponse = await fetch(`/sign-up`, {
-          method: "post",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: `name=${nameValue}&email=${emailValue}&password=${passwordValue}`,
-        });
-        console.log("my rawResponse", rawResponse);
-
-        let response = await rawResponse.json();
-        console.log("ma reponse", response);
-      };
-
-      signUpDB();
+      let response = await rawResponse.json();
+      if (response.result) {
+        localStorage.setItem("userToken", response.user.token);
+      }
     }
-  }, [isError, emailValue, nameValue, passwordValue, isClicked]);
-
-  const handleSubmit = async () => {
-    setIsClicked(true);
   };
-
   const checkValues = useCallback(() => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
     if (
-      nameValue.length >= 2 &&
-      emailValue.match(emailRegex) &&
-      passwordValue.match(passwordRegex)
+      pseudo.length >= 2 &&
+      email.match(emailRegex) &&
+      password.match(passwordRegex)
     ) {
-      setIsError(false);
-    } else {
-      setIsError(true);
+      setIsGoodForm(true);
     }
-  }, [emailValue, nameValue, passwordValue]);
+  }, [email, pseudo, password]);
 
   useEffect(() => {
-    console.log(emailValue, passwordValue, nameValue);
     checkValues();
-  }, [emailValue, passwordValue, nameValue, checkValues]);
+  }, [checkValues, email]);
+  useEffect(() => {
+    checkValues();
+  }, [checkValues, pseudo]);
+  useEffect(() => {
+    checkValues();
+  }, [checkValues, password]);
 
   // All Styled objects
   const headerStyle = {
@@ -135,19 +128,9 @@ export default function SignUp() {
       <div style={headerStyle}>
         <h1>S'inscrire</h1>
       </div>
+      {!isGoodForm && <p>{errorMessage}</p>}
       <div style={formContainer}>
-        <form onSubmit={() => handleSubmit()}>
-          {isError && (
-            <p
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                fontFamily: "Poppins-300italic",
-              }}
-            >
-              {errorMessage}
-            </p>
-          )}
+        <form onSubmit={(e) => e.preventDefault()}>
           <div style={wrapperStyle}>
             <div style={labelColumn}>
               <label style={labelStyle}>Prénom :</label>
@@ -159,8 +142,8 @@ export default function SignUp() {
                 require="true"
                 type="text"
                 aria-required="true"
-                value={nameValue}
-                onChange={(e) => setNameValue(e.target.value)}
+                value={pseudo}
+                onChange={(e) => setPseudo(e.target.value)}
                 placeholder="ex: Jean"
                 style={inputStyle}
               />
@@ -179,8 +162,8 @@ export default function SignUp() {
                 require="true"
                 aria-required="true"
                 autoComplete="off"
-                value={emailValue}
-                onChange={(e) => setEmailValue(e.target.value)}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="something@mail.com"
                 style={inputStyle}
               />
@@ -200,22 +183,23 @@ export default function SignUp() {
                 aria-required="true"
                 type="password"
                 autoComplete="new-password"
-                value={passwordValue}
-                onChange={(e) => setPasswordValue(e.target.value)}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Ex: MotDePasse123"
                 style={inputStyle}
               />
               <p style={tipsStyle}>
-                Doit contenir au moins 10 caractères dont 1 majuscule et un
-                chiffre.
+                Doit contenir au moins 6 caractères dont 1 majuscule et un
+                chiffre. N'utiliser pas les caractères spéciaux.
               </p>
             </div>
           </div>
-          {!isError && (
+
+          {isGoodForm && (
             <div style={submitStyle}>
               <button
                 style={buttonStyle}
-                onClick={(e) => e.preventDefault}
+                onClick={() => handleSignUp()}
                 onFocus={(e) => handleFocus(e)}
               >
                 Envoyer
