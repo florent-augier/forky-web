@@ -19,7 +19,7 @@ import {
 import moment from "moment";
 import useWindowSize from "../../helpers/WindowSize";
 
-export default function CardLunch({ lunch }) {
+export default function CardLunch({ lunch, myId, myName }) {
   const [width] = useWindowSize();
 
   const [color, setColor] = useState(null);
@@ -27,7 +27,7 @@ export default function CardLunch({ lunch }) {
   const [day, setDay] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
+  console.log(myName);
 
   useEffect(() => {
     if (lunch.statut_invit === "Accepté") {
@@ -41,7 +41,7 @@ export default function CardLunch({ lunch }) {
     setDay(moment(lunch.date));
 
     const getUserInfo = async () => {
-      if (userState.id !== lunch.id_sender) {
+      if (myId !== lunch.id_sender) {
         let rawResponse = await fetch(`/getmydata?id=${lunch.id_sender}`);
         const response = await rawResponse.json();
         if (response.result) {
@@ -57,7 +57,7 @@ export default function CardLunch({ lunch }) {
     };
 
     getUserInfo();
-  }, [lunch, userState.id]);
+  }, [lunch, myId]);
 
   const containerCardStyle = {
     display: "flex",
@@ -108,7 +108,7 @@ export default function CardLunch({ lunch }) {
     }
   };
 
-  const toggleModal = (e) => {
+  const toggleModal = () => {
     setIsOpen(!isOpen);
   };
 
@@ -278,6 +278,8 @@ export default function CardLunch({ lunch }) {
                   color={color}
                   message={lunch.message}
                   name={user.name}
+                  myName={myName}
+                  myId={myId}
                 />
               )}
               <button

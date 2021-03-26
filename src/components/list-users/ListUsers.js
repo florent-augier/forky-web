@@ -6,21 +6,20 @@ import CardUser from "./CardUser";
 
 // import { PRIVATE_URL } from "./../../config";
 
-export default function ListUsers() {
+export default function ListUsers({ myId }) {
   const [listUser, setListUser] = useState([]);
 
-  const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
-
   useEffect(() => {
-    const getUsers = async () => {
-      let rawResponse = await fetch(`/alluser?id=${userState.id}`);
-      let response = await rawResponse.json();
+    if (myId !== "") {
+      const getUsers = async () => {
+        let rawResponse = await fetch(`/alluser?id=${myId}`);
+        let response = await rawResponse.json();
 
-      console.log(response);
-      setListUser(response.userExcl);
-    };
-    getUsers();
-  }, [userState.id]);
+        setListUser(response.userExcl);
+      };
+      getUsers();
+    }
+  }, [myId]);
 
   const [width] = useWindowSize();
 
@@ -37,11 +36,23 @@ export default function ListUsers() {
     justifyContent: "center",
   };
 
-  return (
+  return myId !== "" ? (
     <div style={style}>
       {listUser.map((user, i) => (
         <CardUser key={i} user={user} useWindowSize={useWindowSize} />
       ))}
+    </div>
+  ) : (
+    <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <p
+        style={{
+          fontFamily: "Poppins-900",
+          fontSize: "34px",
+          textAlign: "center",
+        }}
+      >
+        Vous devez vous connecter pour voir vos déjeuners
+      </p>
     </div>
   );
 }

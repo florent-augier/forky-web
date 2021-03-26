@@ -9,6 +9,7 @@ export default function RowLinks({
   handleMouseLeave,
   linkStyle,
   isOpen,
+  toggleBurger,
 }) {
   const lunchLink = useRef(null);
   const myLunchesLink = useRef(null);
@@ -20,6 +21,7 @@ export default function RowLinks({
         className="link-container"
         onMouseEnter={() => handleMouseEnter(lunchLink)}
         onMouseLeave={() => handleMouseLeave(lunchLink)}
+        onClick={isOpen ? () => toggleBurger() : ""}
       >
         <Link to="/" style={linkStyle}>
           <div className="link-inner">
@@ -33,6 +35,7 @@ export default function RowLinks({
         className="link-container"
         onMouseEnter={() => handleMouseEnter(myLunchesLink)}
         onMouseLeave={() => handleMouseLeave(myLunchesLink)}
+        onClick={isOpen ? () => toggleBurger() : ""}
       >
         <Link to="/my-lunches" style={linkStyle}>
           <div className="link-inner">

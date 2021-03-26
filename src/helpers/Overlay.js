@@ -11,7 +11,15 @@ const StyledModal = Modal.styled`
 
 `;
 
-export default function Overlay({ toggleModal, isOpen, color, message, name }) {
+export default function Overlay({
+  toggleModal,
+  isOpen,
+  color,
+  message,
+  name,
+  myName,
+  myId,
+}) {
   const [informations, setInformations] = useState("Salut ca va");
 
   useEffect(() => {
@@ -63,7 +71,11 @@ export default function Overlay({ toggleModal, isOpen, color, message, name }) {
         onEscapeKeydown={toggleModal}
       >
         <div style={contentContainer}>
-          <div style={headerStyle}>Le message de {name}</div>
+          {name === myName ? (
+            <div style={headerStyle}>Votre message envoyé à {name}</div>
+          ) : (
+            <div style={headerStyle}>Le message reçu de {name}</div>
+          )}
           <div style={divStyle}>"{informations}"</div>
           <button onClick={toggleModal} style={buttonStyle}>
             Fermer

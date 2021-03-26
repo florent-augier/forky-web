@@ -28,7 +28,7 @@ export default function SignUp({ id, dispatch }) {
 
       let response = await rawResponse.json();
       if (response.result) {
-        localStorage.setItem("userToken", response.userExists._id);
+        localStorage.setItem("userId", response.userExists._id);
         dispatch({ type: "saveId", id: response.userExists._id });
         history.push("/my-account");
       }

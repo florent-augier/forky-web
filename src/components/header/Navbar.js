@@ -20,7 +20,7 @@ import Account from "../account/Account";
 import MyLunches from "../my-lunches/MyLunches";
 import MyAccount from "../account/MyAccount";
 
-export default function Navbar({ useWindowSize }) {
+export default function Navbar({ useWindowSize, myId, myName }) {
   const [id, dispatch] = useReducer(idReducer, "");
 
   const [isOpen, setIsOpen] = useState(false); // Hook gérant le toggle de l'hamburger
@@ -85,7 +85,7 @@ export default function Navbar({ useWindowSize }) {
             onMouseEnter={() => handleMouseEnter(myAccountLink)}
             onMouseLeave={() => handleMouseLeave(myAccountLink)}
           >
-            {id !== "" ? (
+            {id !== "" || myId !== "" ? (
               <Link to="/my-account" style={linkStyle}>
                 <div className="link-inner">
                   <FontAwesomeIcon
@@ -120,21 +120,22 @@ export default function Navbar({ useWindowSize }) {
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
             linkStyle={linkStyle}
+            toggleBurger={toggleBurger}
           />
         </div>
       )}
 
       <Switch>
         <Route exact path="/">
-          <ListUsers />
+          <ListUsers myId={myId} />
         </Route>
         <Route path="/my-lunches">
-          <MyLunches />
+          <MyLunches myId={myId} myName={myName} />
         </Route>
         <Redirect to="/my-account" from="/account/sign-up" />
-        {id !== "" ? (
+        {id !== "" || myId !== "" ? (
           <Route>
-            <MyAccount id={id} />
+            <MyAccount id={id} myId={myId} myName={myName} />
           </Route>
         ) : (
           <Route path="/account">
