@@ -12,48 +12,39 @@ export default function SignUp({ id, dispatch }) {
 
   console.log(location);
 
-  const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isGoodForm, setIsGoodForm] = useState(false);
   const errorMessage = `Si tous les champs sont valides, vous ne verrez plus ce message  `;
 
   // Function that handle form on submit
-  const handleSignUp = async () => {
+  const handleSignIn = async () => {
     if (isGoodForm) {
-      let rawResponse = await fetch(`/sign-up`, {
+      let rawResponse = await fetch(`/sign-in`, {
         method: "post",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `name=${pseudo}&email=${email}&password=${password}`,
+        body: `email=${email}&password=${password}`,
       });
 
       let response = await rawResponse.json();
       if (response.result) {
-        localStorage.setItem("userToken", response.user.token);
-        dispatch({ type: "saveId", id: response.user._id });
+        localStorage.setItem("userToken", response.userExists._id);
+        dispatch({ type: "saveId", id: response.userExists._id });
         history.push("/my-account");
       }
     }
   };
   const checkValues = useCallback(() => {
     const emailRegex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/;
 
-    if (
-      pseudo.length >= 2 &&
-      email.match(emailRegex) &&
-      password.match(passwordRegex)
-    ) {
+    if (email.match(emailRegex)) {
       setIsGoodForm(true);
     }
-  }, [email, pseudo, password]);
+  }, [email]);
 
   useEffect(() => {
     checkValues();
   }, [checkValues, email]);
-  useEffect(() => {
-    checkValues();
-  }, [checkValues, pseudo]);
   useEffect(() => {
     checkValues();
   }, [checkValues, password]);
@@ -148,25 +139,6 @@ export default function SignUp({ id, dispatch }) {
           <form onSubmit={(e) => e.preventDefault()}>
             <div style={wrapperStyle}>
               <div style={labelColumn}>
-                <label style={labelStyle}>Prénom :</label>
-              </div>
-              <div style={inputAndTipsStyle}>
-                <input
-                  onFocus={(e) => handleFocus(e)}
-                  minLength="2"
-                  require="true"
-                  type="text"
-                  aria-required="true"
-                  value={pseudo}
-                  onChange={(e) => setPseudo(e.target.value)}
-                  placeholder="ex: Jean"
-                  style={inputStyle}
-                />
-                <p style={tipsStyle}>Au moins 2 caractères.</p>
-              </div>
-            </div>
-            <div style={wrapperStyle}>
-              <div style={labelColumn}>
                 <label style={labelStyle}>Email :</label>
               </div>
               <div style={inputAndTipsStyle}>
@@ -214,7 +186,7 @@ export default function SignUp({ id, dispatch }) {
               <div style={submitStyle}>
                 <button
                   style={buttonStyle}
-                  onClick={() => handleSignUp()}
+                  onClick={() => handleSignIn()}
                   onFocus={(e) => handleFocus(e)}
                 >
                   Envoyer
