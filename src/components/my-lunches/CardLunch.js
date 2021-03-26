@@ -77,7 +77,7 @@ export default function CardLunch({ lunch }) {
   const gridItemStyle = {
     display: "flex",
     width: "100%",
-    justifyContent: width > 400 ? "center" : "flex-start",
+    justifyContent: "flex-start",
     alignItems: "center",
     fontFamily: "Poppins-300",
     margin: "auto",
