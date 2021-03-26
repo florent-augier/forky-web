@@ -1,11 +1,16 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { Redirect } from "react-router";
+import { useHistory } from "react-router";
+import { BrowserRouter as Router, useLocation } from "react-router-dom";
 
 import useWindowSize from "../../helpers/WindowSize";
-import MyAccount from "./MyAccount";
 
 export default function SignUp({ id, dispatch }) {
   const [width] = useWindowSize();
+
+  let history = useHistory();
+  const location = useLocation();
+
+  console.log(location);
 
   const [pseudo, setPseudo] = useState("");
   const [email, setEmail] = useState("");
@@ -26,6 +31,7 @@ export default function SignUp({ id, dispatch }) {
       if (response.result) {
         localStorage.setItem("userToken", response.user.token);
         dispatch({ type: "saveId", id: response.user._id });
+        history.push("/my-account");
       }
     }
   };
@@ -126,95 +132,98 @@ export default function SignUp({ id, dispatch }) {
     fontFamily: "Poppins-700",
   };
 
-  return id !== "" ? (
-    <Redirect to="/my-account">
-      <MyAccount id={id} />
-    </Redirect>
-  ) : (
-    <div>
-      <div style={headerStyle}>
-        <h1>S'inscrire</h1>
-      </div>
-      {!isGoodForm && <p>{errorMessage}</p>}
-      <div style={formContainer}>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <div style={wrapperStyle}>
-            <div style={labelColumn}>
-              <label style={labelStyle}>Prénom :</label>
-            </div>
-            <div style={inputAndTipsStyle}>
-              <input
-                onFocus={(e) => handleFocus(e)}
-                minLength="2"
-                require="true"
-                type="text"
-                aria-required="true"
-                value={pseudo}
-                onChange={(e) => setPseudo(e.target.value)}
-                placeholder="ex: Jean"
-                style={inputStyle}
-              />
-              <p style={tipsStyle}>Au moins 2 caractères.</p>
-            </div>
-          </div>
-          <div style={wrapperStyle}>
-            <div style={labelColumn}>
-              <label style={labelStyle}>Email :</label>
-            </div>
-            <div style={inputAndTipsStyle}>
-              <input
-                defaultChecked
-                onFocus={(e) => handleFocus(e)}
-                type="email"
-                require="true"
-                aria-required="true"
-                autoComplete="off"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="something@mail.com"
-                style={inputStyle}
-              />
-              <p style={tipsStyle}>Vérifiez le format de l'email.</p>
-            </div>
-          </div>
-          <div style={wrapperStyle}>
-            <div style={labelColumn}>
-              <label style={labelStyle}>Mot de passe :</label>
-            </div>
-            <div style={inputAndTipsStyle}>
-              <input
-                minLength={6}
-                onFocus={(e) => handleFocus(e)}
-                require="true"
-                required
-                aria-required="true"
-                type="password"
-                autoComplete="new-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Ex: MotDePasse123"
-                style={inputStyle}
-              />
-              <p style={tipsStyle}>
-                Doit contenir au moins 6 caractères dont 1 majuscule et un
-                chiffre. N'utiliser pas les caractères spéciaux.
-              </p>
-            </div>
-          </div>
+  // return id !== "" ? (
+  //   <Redirect to="/my-account">
+  //     <MyAccount id={id} />
+  //   </Redirect>
 
-          {isGoodForm && (
-            <div style={submitStyle}>
-              <button
-                style={buttonStyle}
-                onClick={() => handleSignUp()}
-                onFocus={(e) => handleFocus(e)}
-              >
-                Envoyer
-              </button>
+  return (
+    <Router history={history} location={location}>
+      <div>
+        <div style={headerStyle}>
+          <h1>S'inscrire</h1>
+        </div>
+        {!isGoodForm && <p>{errorMessage}</p>}
+        <div style={formContainer}>
+          <form onSubmit={(e) => e.preventDefault()}>
+            <div style={wrapperStyle}>
+              <div style={labelColumn}>
+                <label style={labelStyle}>Prénom :</label>
+              </div>
+              <div style={inputAndTipsStyle}>
+                <input
+                  onFocus={(e) => handleFocus(e)}
+                  minLength="2"
+                  require="true"
+                  type="text"
+                  aria-required="true"
+                  value={pseudo}
+                  onChange={(e) => setPseudo(e.target.value)}
+                  placeholder="ex: Jean"
+                  style={inputStyle}
+                />
+                <p style={tipsStyle}>Au moins 2 caractères.</p>
+              </div>
             </div>
-          )}
-        </form>
+            <div style={wrapperStyle}>
+              <div style={labelColumn}>
+                <label style={labelStyle}>Email :</label>
+              </div>
+              <div style={inputAndTipsStyle}>
+                <input
+                  defaultChecked
+                  onFocus={(e) => handleFocus(e)}
+                  type="email"
+                  require="true"
+                  aria-required="true"
+                  autoComplete="off"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="something@mail.com"
+                  style={inputStyle}
+                />
+                <p style={tipsStyle}>Vérifiez le format de l'email.</p>
+              </div>
+            </div>
+            <div style={wrapperStyle}>
+              <div style={labelColumn}>
+                <label style={labelStyle}>Mot de passe :</label>
+              </div>
+              <div style={inputAndTipsStyle}>
+                <input
+                  minLength={6}
+                  onFocus={(e) => handleFocus(e)}
+                  require="true"
+                  required
+                  aria-required="true"
+                  type="password"
+                  autoComplete="new-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Ex: MotDePasse123"
+                  style={inputStyle}
+                />
+                <p style={tipsStyle}>
+                  Doit contenir au moins 6 caractères dont 1 majuscule et un
+                  chiffre. N'utiliser pas les caractères spéciaux.
+                </p>
+              </div>
+            </div>
+
+            {isGoodForm && (
+              <div style={submitStyle}>
+                <button
+                  style={buttonStyle}
+                  onClick={() => handleSignUp()}
+                  onFocus={(e) => handleFocus(e)}
+                >
+                  Envoyer
+                </button>
+              </div>
+            )}
+          </form>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }

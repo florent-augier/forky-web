@@ -85,15 +85,31 @@ export default function Navbar({ useWindowSize }) {
             onMouseEnter={() => handleMouseEnter(myAccountLink)}
             onMouseLeave={() => handleMouseLeave(myAccountLink)}
           >
-            <Link to="/account" style={linkStyle}>
-              <div className="link-inner">
-                <FontAwesomeIcon
-                  icon={faHouseUser}
-                  size={width >= 600 ? "2x" : "3x"}
-                />
-                {width >= 600 && <h1 className="nav-text-link">Mon compte</h1>}
-              </div>
-            </Link>
+            {id !== "" ? (
+              <Link to="/my-account" style={linkStyle}>
+                <div className="link-inner">
+                  <FontAwesomeIcon
+                    icon={faHouseUser}
+                    size={width >= 600 ? "2x" : "3x"}
+                  />
+                  {width >= 600 && (
+                    <h1 className="nav-text-link">Mon compte</h1>
+                  )}
+                </div>
+              </Link>
+            ) : (
+              <Link to="/account" style={linkStyle}>
+                <div className="link-inner">
+                  <FontAwesomeIcon
+                    icon={faHouseUser}
+                    size={width >= 600 ? "2x" : "3x"}
+                  />
+                  {width >= 600 && (
+                    <h1 className="nav-text-link">Mon compte</h1>
+                  )}
+                </div>
+              </Link>
+            )}
           </div>
         </div>
       </nav>
@@ -115,6 +131,7 @@ export default function Navbar({ useWindowSize }) {
         <Route path="/my-lunches">
           <MyLunches />
         </Route>
+        <Redirect to="/my-account" from="/account/sign-up" />
         {id !== "" ? (
           <Route>
             <MyAccount id={id} />
