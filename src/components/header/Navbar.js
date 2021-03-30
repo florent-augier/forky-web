@@ -1,28 +1,15 @@
-import React, { useState, useRef, useEffect, useReducer } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { Router, Link, useHistory, Switch, Route } from "react-router-dom";
+
 import "../../stylesheets/Navbar.css";
 import logo from "../../images/logo-green.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouseUser } from "@fortawesome/free-solid-svg-icons";
 import Burger from "@animated-burgers/burger-slip";
 import "@animated-burgers/burger-slip/dist/styles.css";
-import idReducer from "../../reducers/id";
 
 import RowLinks from "./RowLinks";
-import ListUsers from "../list-users/ListUsers";
-import Account from "../account/Account";
-import MyLunches from "../my-lunches/MyLunches";
-import MyAccount from "../account/MyAccount";
-
-export default function Navbar({ useWindowSize }) {
-  const [id, dispatch] = useReducer(idReducer, "");
-
+export default function Navbar({ useWindowSize, id, dispatch }) {
   const [isOpen, setIsOpen] = useState(false); // Hook gérant le toggle de l'hamburger
   const [isVisible, setIsVisible] = useState(true); // Hook gérant l'affichage de RowLinks selon le breakpoint
 
@@ -30,10 +17,6 @@ export default function Navbar({ useWindowSize }) {
 
   const myAccountLink = useRef(null);
   const hamburger = useRef(null);
-
-  useEffect(() => {
-    console.log("depuis ma navbar", id);
-  });
 
   useEffect(() => {
     if (width >= 768) {
@@ -63,7 +46,7 @@ export default function Navbar({ useWindowSize }) {
   };
 
   return (
-    <Router>
+    <div>
       <nav className="navbar-row">
         <img src={logo} alt="logo" className="brand-image" />
         {isVisible && !isOpen && (
@@ -85,31 +68,15 @@ export default function Navbar({ useWindowSize }) {
             onMouseEnter={() => handleMouseEnter(myAccountLink)}
             onMouseLeave={() => handleMouseLeave(myAccountLink)}
           >
-            {id !== "" ? (
-              <Link to="/my-account" style={linkStyle}>
-                <div className="link-inner">
-                  <FontAwesomeIcon
-                    icon={faHouseUser}
-                    size={width >= 600 ? "2x" : "3x"}
-                  />
-                  {width >= 600 && (
-                    <h1 className="nav-text-link">Mon compte</h1>
-                  )}
-                </div>
-              </Link>
-            ) : (
-              <Link to="/account" style={linkStyle}>
-                <div className="link-inner">
-                  <FontAwesomeIcon
-                    icon={faHouseUser}
-                    size={width >= 600 ? "2x" : "3x"}
-                  />
-                  {width >= 600 && (
-                    <h1 className="nav-text-link">Mon compte</h1>
-                  )}
-                </div>
-              </Link>
-            )}
+            <Link to="/account" style={linkStyle}>
+              <div className="link-inner">
+                <FontAwesomeIcon
+                  icon={faHouseUser}
+                  size={width >= 600 ? "2x" : "3x"}
+                />
+                {width >= 600 && <h1 className="nav-text-link">Mon compte</h1>}
+              </div>
+            </Link>
           </div>
         </div>
       </nav>
@@ -123,25 +90,6 @@ export default function Navbar({ useWindowSize }) {
           />
         </div>
       )}
-
-      <Switch>
-        <Route exact path="/">
-          <ListUsers />
-        </Route>
-        <Route path="/my-lunches">
-          <MyLunches />
-        </Route>
-        <Redirect to="/my-account" from="/account/sign-up" />
-        {id !== "" ? (
-          <Route>
-            <MyAccount id={id} />
-          </Route>
-        ) : (
-          <Route path="/account">
-            <Account id={id} dispatch={dispatch} />
-          </Route>
-        )}
-      </Switch>
-    </Router>
+    </div>
   );
 }

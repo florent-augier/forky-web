@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import defaultAvatar from "../../images/default_avatar.jpg";
 import { BriefcaseOutline } from "react-ionicons";
@@ -12,10 +12,6 @@ export default function CardUser({ user, useWindowSize }) {
 
   const [distance] = useState(Math.floor(Math.random() * 7000));
   const [lunches] = useState(Math.floor(Math.random() * 25));
-
-  useEffect(() => {
-    console.log("chaque utilisateur", user);
-  }, [user]);
 
   const style = {
     display: "flex",

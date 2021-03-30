@@ -9,7 +9,7 @@ import {
 import UpcomingLunches from "./UpcomingLunches";
 import PastLunches from "./PastLunches";
 
-export default function BreadCrumb() {
+export default function BreadCrumb({ id }) {
   const underlineRef = useRef(null);
   const divRef = useRef();
   const upcomingLinkRef = useRef(null);
@@ -123,10 +123,10 @@ export default function BreadCrumb() {
 
       <Switch>
         <Route exact path="/my-lunches/upcoming-lunches">
-          <UpcomingLunches />
+          <UpcomingLunches id={id} />
         </Route>
         <Route path="/my-lunches/past-lunches">
-          <PastLunches />
+          <PastLunches id={id} />
         </Route>
       </Switch>
     </Router>

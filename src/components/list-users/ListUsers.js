@@ -6,21 +6,18 @@ import CardUser from "./CardUser";
 
 // import { PRIVATE_URL } from "./../../config";
 
-export default function ListUsers() {
+export default function ListUsers({ id }) {
   const [listUser, setListUser] = useState([]);
-
-  const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
 
   useEffect(() => {
     const getUsers = async () => {
-      let rawResponse = await fetch(`/alluser?id=${userState.id}`);
+      let rawResponse = await fetch(`/alluser?id=${id}`);
       let response = await rawResponse.json();
 
-      console.log(response);
       setListUser(response.userExcl);
     };
     getUsers();
-  }, [userState.id]);
+  }, [id]);
 
   const [width] = useWindowSize();
 

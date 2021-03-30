@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import CardLunch from "./CardLunch";
 
-export default function UpcomingLunches() {
-  const userState = { name: "florent", id: "5fdb5e26078d5f0d10f844ca" };
-
+export default function UpcomingLunches({ id }) {
   const [currentInvits, setCurrentInvits] = useState([]);
 
   useEffect(() => {
-    const getCurrentInvits = async () => {
-      let rawResponse = await fetch(`/current-invit?id=${userState.id}`);
-      let response = await rawResponse.json();
+    if (id !== "") {
+      const getCurrentInvits = async () => {
+        let rawResponse = await fetch(`/current-invit?id=${id}`);
+        let response = await rawResponse.json();
 
-      console.log(response);
-      setCurrentInvits(response.invitations);
-    };
-    getCurrentInvits();
-  }, [userState.id]);
+        console.log(response);
+        setCurrentInvits(response.invitations);
+      };
+      getCurrentInvits();
+    }
+  }, [id]);
 
   return currentInvits.length > 0 ? (
     <div>

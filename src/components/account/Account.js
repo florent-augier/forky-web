@@ -1,13 +1,12 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import {
   BrowserRouter as Router,
   NavLink,
-  Redirect,
   Route,
   Switch,
+  useHistory,
 } from "react-router-dom";
-import MyAccount from "./MyAccount";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 
@@ -15,7 +14,11 @@ export default function Account({ id, dispatch }) {
   const signInLinkRef = useRef(null);
   const signUpLinkRef = useRef(null);
 
-  // let history = useHistory();
+  let history = useHistory();
+
+  useEffect(() => {
+    console.log(history);
+  }, [history]);
 
   const breadcrumbStyle = {
     display: "flex",
@@ -30,13 +33,7 @@ export default function Account({ id, dispatch }) {
     }
   };
 
-  return id !== "" ? (
-    <Route>
-      <Redirect to="/my-account" from>
-        <MyAccount id={id} />
-      </Redirect>
-    </Route>
-  ) : (
+  return (
     <Router>
       <div style={breadcrumbStyle}>
         <div>
@@ -81,11 +78,11 @@ export default function Account({ id, dispatch }) {
       </div>
 
       <Switch>
+        <Route path="/account/sign-up">
+          <SignUp dispatch={dispatch} />
+        </Route>
         <Route path="/account/sign-in">
           <SignIn dispatch={dispatch} />
-        </Route>
-        <Route path="/account/sign-up">
-          <SignUp id={id} dispatch={dispatch} />
         </Route>
       </Switch>
     </Router>

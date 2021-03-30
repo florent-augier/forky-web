@@ -31,7 +31,6 @@ export default function SignUp({ id, dispatch }) {
       if (response.result) {
         localStorage.setItem("userToken", response.user.token);
         dispatch({ type: "saveId", id: response.user._id });
-        history.push("/my-account");
       }
     }
   };

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useHistory } from "react-router";
-import { BrowserRouter as Router, useLocation } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import useWindowSize from "../../helpers/WindowSize";
 
@@ -8,9 +8,6 @@ export default function SignUp({ id, dispatch }) {
   const [width] = useWindowSize();
 
   let history = useHistory();
-  const location = useLocation();
-
-  console.log(location);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,7 +25,8 @@ export default function SignUp({ id, dispatch }) {
 
       let response = await rawResponse.json();
       if (response.result) {
-        localStorage.setItem("userToken", response.userExists._id);
+        console.log(response.userExists);
+        localStorage.setItem("localId", response.userExists._id);
         dispatch({ type: "saveId", id: response.userExists._id });
         history.push("/my-account");
       }
@@ -129,10 +127,10 @@ export default function SignUp({ id, dispatch }) {
   //   </Redirect>
 
   return (
-    <Router history={history} location={location}>
+    <Router>
       <div>
         <div style={headerStyle}>
-          <h1>S'inscrire</h1>
+          <h1>Se connecter</h1>
         </div>
         {!isGoodForm && <p>{errorMessage}</p>}
         <div style={formContainer}>
