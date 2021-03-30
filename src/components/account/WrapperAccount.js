@@ -14,7 +14,6 @@ export default function WrapperAccount({ id, dispatch }) {
   let history = useHistory();
 
   useEffect(() => {
-    console.log(id);
     if (id !== "") {
       setIsLogin(true);
     }
@@ -25,10 +24,6 @@ export default function WrapperAccount({ id, dispatch }) {
     dispatch({ type: "removeId" });
     history.replace("/account/hello");
   };
-
-  if (isLogin) {
-    console.log("im login");
-  }
 
   return (
     <Router>

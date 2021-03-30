@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import CardLunch from "./CardLunch";
 
+import { PRIVATE_URL } from "../../config";
+
 export default function UpcomingLunches({ id }) {
   const [currentInvits, setCurrentInvits] = useState([]);
 
   useEffect(() => {
     if (id !== "") {
       const getCurrentInvits = async () => {
-        let rawResponse = await fetch(`/current-invit?id=${id}`);
+        let rawResponse = await fetch(`${PRIVATE_URL}/current-invit?id=${id}`);
         let response = await rawResponse.json();
 
         console.log(response);
@@ -20,7 +22,7 @@ export default function UpcomingLunches({ id }) {
   return currentInvits.length > 0 ? (
     <div>
       {currentInvits.map((lunch, i) => (
-        <CardLunch lunch={lunch} key={i} />
+        <CardLunch lunch={lunch} key={i} id={id} />
       ))}
     </div>
   ) : (

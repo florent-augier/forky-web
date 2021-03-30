@@ -1,24 +1,17 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 import {
   BrowserRouter as Router,
   NavLink,
   Route,
   Switch,
-  useHistory,
 } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 
-export default function Account({ id, dispatch }) {
+export default function Account({ dispatch }) {
   const signInLinkRef = useRef(null);
   const signUpLinkRef = useRef(null);
-
-  let history = useHistory();
-
-  useEffect(() => {
-    console.log(history);
-  }, [history]);
 
   const breadcrumbStyle = {
     display: "flex",

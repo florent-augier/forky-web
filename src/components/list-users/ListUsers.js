@@ -4,14 +4,14 @@ import useWindowSize from "./../../helpers/WindowSize";
 
 import CardUser from "./CardUser";
 
-// import { PRIVATE_URL } from "./../../config";
+import { PRIVATE_URL } from "../../config";
 
 export default function ListUsers({ id }) {
   const [listUser, setListUser] = useState([]);
 
   useEffect(() => {
     const getUsers = async () => {
-      let rawResponse = await fetch(`/alluser?id=${id}`);
+      let rawResponse = await fetch(`${PRIVATE_URL}/alluser?id=${id}`);
       let response = await rawResponse.json();
 
       setListUser(response.userExcl);

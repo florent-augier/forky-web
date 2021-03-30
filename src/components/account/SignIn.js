@@ -4,7 +4,9 @@ import { useHistory } from "react-router-dom";
 
 import useWindowSize from "../../helpers/WindowSize";
 
-export default function SignUp({ id, dispatch }) {
+import { PRIVATE_URL } from "../../config";
+
+export default function SignUp({ dispatch }) {
   const [width] = useWindowSize();
 
   let history = useHistory();
@@ -17,7 +19,7 @@ export default function SignUp({ id, dispatch }) {
   // Function that handle form on submit
   const handleSignIn = async () => {
     if (isGoodForm) {
-      let rawResponse = await fetch(`/sign-in`, {
+      let rawResponse = await fetch(`${PRIVATE_URL}/sign-in`, {
         method: "post",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `email=${email}&password=${password}`,
@@ -25,7 +27,6 @@ export default function SignUp({ id, dispatch }) {
 
       let response = await rawResponse.json();
       if (response.result) {
-        console.log(response.userExists);
         localStorage.setItem("localId", response.userExists._id);
         dispatch({ type: "saveId", id: response.userExists._id });
         history.push("/my-account");

@@ -19,7 +19,6 @@ function App() {
   const [id, dispatch] = useReducer(idReducer, "");
 
   useEffect(() => {
-    console.log("id when change", id);
     if (id !== "" || id !== null) {
       localStorage.setItem("localId", id);
     }

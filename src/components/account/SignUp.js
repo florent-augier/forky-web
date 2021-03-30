@@ -4,6 +4,8 @@ import { BrowserRouter as Router, useLocation } from "react-router-dom";
 
 import useWindowSize from "../../helpers/WindowSize";
 
+import { PRIVATE_URL } from "../../config";
+
 export default function SignUp({ id, dispatch }) {
   const [width] = useWindowSize();
 
@@ -21,7 +23,7 @@ export default function SignUp({ id, dispatch }) {
   // Function that handle form on submit
   const handleSignUp = async () => {
     if (isGoodForm) {
-      let rawResponse = await fetch(`/sign-up`, {
+      let rawResponse = await fetch(`${PRIVATE_URL}/sign-up`, {
         method: "post",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: `name=${pseudo}&email=${email}&password=${password}`,

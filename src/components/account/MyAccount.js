@@ -2,25 +2,16 @@ import React, { useEffect, useState } from "react";
 import defaultAvatar from "../../images/default_avatar.jpg";
 import useWindowSize from "../../helpers/WindowSize";
 
-import { useHistory } from "react-router-dom";
+import { PRIVATE_URL } from "../../config";
 
-export default function MyAccount({ id, dispatch, handleLogOut }) {
+export default function MyAccount({ id, handleLogOut }) {
   const [myData, setMyData] = useState({});
   const [width] = useWindowSize();
 
-  let history = useHistory();
-
   useEffect(() => {
-    console.log("my history", history);
-
-    console.log("my id reducer", id);
-  });
-
-  useEffect(() => {
-    console.log("id", id);
     if (id !== "") {
       const getUser = async () => {
-        let rawResponse = await fetch(`/getmydata?id=${id}`);
+        let rawResponse = await fetch(`${PRIVATE_URL}/getmydata?id=${id}`);
         let response = await rawResponse.json();
         if (response.result) {
           setMyData(response.myUser);
